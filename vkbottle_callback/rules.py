@@ -5,7 +5,7 @@ from typing import Awaitable, Callable, Coroutine, List, Union
 from vkbottle import ABCRule
 from vkbottle_types import BaseStateGroup
 
-from vkbottle_meow import MessageEvent
+from vkbottle_callback import MessageEvent
 
 
 class ABCMessageEventRule(ABCRule):

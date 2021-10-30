@@ -1,7 +1,7 @@
 from typing import Any, Callable, Dict, List, Optional, Union
 from warnings import warn
 
-from loguru import logger
+from vkbottle.modules import logger
 from vkbottle import ABCAPI, ABCHandler, ABCStateDispenser, ABCView, API, BaseMiddleware, BaseReturnManager, \
     MiddlewareResponse, convert_shorten_filter
 from vkbottle.dispatch.handlers import FromFuncHandler

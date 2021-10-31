@@ -4,7 +4,6 @@ from warnings import warn
 from vkbottle import ABCAPI, API
 from vkbottle.modules import json
 from vkbottle_types.events.objects.group_event_objects import MessageEventObject
-from vkbottle_types.responses.base import OkResponseModel
 from vkbottle_types.responses.messages import EditResponseModel, SendResponseModel
 
 
@@ -26,7 +25,7 @@ class MessageEvent(MessageEventObject):
              "It's work without him", PendingDeprecationWarning)
         return self
 
-    async def show_snackbar(self, text: str) -> OkResponseModel:
+    async def show_snackbar(self, text: str) -> int:
         return await self.ctx_api.messages.send_message_event_answer(
             event_id=self.event_id,
             user_id=self.user_id,
@@ -37,7 +36,7 @@ class MessageEvent(MessageEventObject):
             })
         )
 
-    async def open_link(self, url: str) -> OkResponseModel:
+    async def open_link(self, url: str) -> int:
         return await self.ctx_api.messages.send_message_event_answer(
             event_id=self.event_id,
             user_id=self.user_id,
@@ -53,7 +52,7 @@ class MessageEvent(MessageEventObject):
             app_id: int,
             app_hash: str,
             owner_id: Optional[int] = None
-    ) -> OkResponseModel:
+    ) -> int:
         return await self.ctx_api.messages.send_message_event_answer(
             event_id=self.event_id,
             user_id=self.user_id,

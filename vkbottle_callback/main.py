@@ -10,6 +10,8 @@ from vkbottle.framework.bot.labeler.default import ShortenRule
 from vkbottle.modules import json
 from vkbottle_types.events import MessageEvent as _MessageEvent
 from vkbottle_types.events.objects.group_event_objects import MessageEventObject
+from vkbottle_types.responses.base import OkResponseModel
+from vkbottle_types.responses.messages import EditResponseModel, SendResponseModel
 
 
 class MessageEvent(MessageEventObject):
@@ -26,7 +28,7 @@ class MessageEvent(MessageEventObject):
              "It's work without him", PendingDeprecationWarning)
         return self
 
-    async def show_snackbar(self, text: str):
+    async def show_snackbar(self, text: str) -> OkResponseModel:
         return await self.ctx_api.messages.send_message_event_answer(
             event_id=self.event_id,
             user_id=self.user_id,
@@ -37,7 +39,7 @@ class MessageEvent(MessageEventObject):
             })
         )
 
-    async def open_link(self, url: str):
+    async def open_link(self, url: str) -> OkResponseModel:
         return await self.ctx_api.messages.send_message_event_answer(
             event_id=self.event_id,
             user_id=self.user_id,
@@ -51,9 +53,9 @@ class MessageEvent(MessageEventObject):
     async def open_app(
             self,
             app_id: int,
-            owner_id: Optional[int],
-            app_hash: str
-    ):
+            app_hash: str,
+            owner_id: Optional[int] = None
+    ) -> OkResponseModel:
         return await self.ctx_api.messages.send_message_event_answer(
             event_id=self.event_id,
             user_id=self.user_id,
@@ -68,11 +70,56 @@ class MessageEvent(MessageEventObject):
 
     async def edit_message(
             self,
-            **kwargs  # todo
-    ):
-        kwargs["conversation_message_id"] = self.conversation_message_id
-        return await self.ctx_api.messages.send(
+            message: Optional[str] = None,
+            lat: Optional[float] = None,
+            long: Optional[float] = None,
+            attachment: Optional[str] = None,
+            keep_forward_messages: Optional[bool] = None,
+            keep_snippets: Optional[bool] = None,
+            group_id: Optional[int] = None,
+            dont_parse_links: Optional[bool] = None,
+            message_id: Optional[int] = None,
+            template: Optional[str] = None,
+            keyboard: Optional[str] = None,
             **kwargs
+    ) -> EditResponseModel:
+        params = locals()
+        params.pop("self")
+        params.pop("kwargs")
+        params.update(kwargs)
+        params["peer_id"] = self.peer_id
+        params["conversation_message_id"] = self.conversation_message_id
+        print(params)
+        return await self.ctx_api.messages.edit(
+            **params
+        )
+
+    async def send_message(
+            self,
+            random_id: Optional[int] = None,
+            message: Optional[str] = None,
+            lat: Optional[float] = None,
+            long: Optional[float] = None,
+            attachment: Optional[str] = None,
+            reply_to: Optional[int] = None,
+            forward_messages: Optional[List[int]] = None,
+            sticker_id: Optional[int] = None,
+            group_id: Optional[int] = None,
+            keyboard: Optional[str] = None,
+            payload: Optional[str] = None,
+            dont_parse_links: Optional[bool] = None,
+            disable_mentions: Optional[bool] = None,
+            intent: Optional[str] = None,
+            subscribe_id: Optional[int] = None,
+            **kwargs
+    ) -> SendResponseModel:
+        params = locals()
+        params.pop("self")
+        params.pop("kwargs")
+        params.update(kwargs)
+        params["peer_id"] = self.peer_id
+        return await self.ctx_api.messages.send(
+            **params
         )
 
 

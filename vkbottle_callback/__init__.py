@@ -11,7 +11,7 @@ in the code, some base rules and ABCMessageEventRule.
 >>>
 >>>
 >>> @bot.on.message_event()
->>> def test_snackbar(event: MessageEvent):
+>>> async def test_snackbar(event: MessageEvent):
 >>>     await event.show_snackbar("Hello world")
 """
 

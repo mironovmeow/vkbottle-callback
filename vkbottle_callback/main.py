@@ -23,7 +23,7 @@ class MessageEvent(MessageEventObject):
         return getattr(self, "unprepared_ctx_api")
 
     @property  # use for backward compatibility (event.object.user_id)
-    def object(self):
+    def object(self) -> "MessageEvent":
         warn("Don't use \"object\" attribute for MessageEvent\n"
              "It's work without him", PendingDeprecationWarning)
         return self
@@ -76,9 +76,7 @@ class MessageEvent(MessageEventObject):
             attachment: Optional[str] = None,
             keep_forward_messages: Optional[bool] = None,
             keep_snippets: Optional[bool] = None,
-            group_id: Optional[int] = None,
             dont_parse_links: Optional[bool] = None,
-            message_id: Optional[int] = None,
             template: Optional[str] = None,
             keyboard: Optional[str] = None,
             **kwargs
@@ -104,7 +102,6 @@ class MessageEvent(MessageEventObject):
             reply_to: Optional[int] = None,
             forward_messages: Optional[List[int]] = None,
             sticker_id: Optional[int] = None,
-            group_id: Optional[int] = None,
             keyboard: Optional[str] = None,
             payload: Optional[str] = None,
             dont_parse_links: Optional[bool] = None,

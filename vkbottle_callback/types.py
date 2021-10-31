@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Union
+from typing import Any, Callable, List, Optional, Union
 from warnings import warn
 
 from vkbottle import ABCAPI, API
@@ -24,6 +24,19 @@ class MessageEvent(MessageEventObject):
         warn("Don't use \"object\" attribute for MessageEvent\n"
              "It's work without him", PendingDeprecationWarning)
         return self
+
+    def get_payload_json(
+        self,
+        throw_error: bool = False,
+        unpack_failure: Callable[[str], dict] = lambda payload: payload,
+        json: Any = __import__("json"),
+    ) -> Union[dict, None]:
+
+        # workaround: https://vk.com/bug242486
+        if self.payload is not str:
+            return self.payload
+
+        return super().get_payload_json(throw_error, unpack_failure, json)
 
     async def show_snackbar(self, text: str) -> int:
         return await self.ctx_api.messages.send_message_event_answer(

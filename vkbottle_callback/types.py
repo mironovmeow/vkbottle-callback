@@ -4,7 +4,7 @@ from warnings import warn
 from vkbottle import ABCAPI, API
 from vkbottle.modules import json
 from vkbottle_types.events.objects.group_event_objects import MessageEventObject
-from vkbottle_types.responses.messages import EditResponseModel, SendResponseModel
+from vkbottle_types.objects import BaseBoolInt
 
 
 class MessageEvent(MessageEventObject):
@@ -77,7 +77,7 @@ class MessageEvent(MessageEventObject):
             template: Optional[str] = None,
             keyboard: Optional[str] = None,
             **kwargs
-    ) -> EditResponseModel:
+    ) -> BaseBoolInt:
         params = locals()
         params.pop("self")
         params.pop("kwargs")
@@ -106,7 +106,7 @@ class MessageEvent(MessageEventObject):
             intent: Optional[str] = None,
             subscribe_id: Optional[int] = None,
             **kwargs
-    ) -> SendResponseModel:
+    ) -> int:
         params = locals()
         params.pop("self")
         params.pop("kwargs")

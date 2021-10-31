@@ -65,7 +65,6 @@ class PayloadContainsRule(ABCMessageEventRule):
         return True
 
 
-# I don't know, how it works... I have just copied from vkbottle.rules and change types
 class PayloadMapRule(ABCMessageEventRule):
     def __init__(self, payload_map: Union[PayloadMap, PayloadMapDict]):
         if isinstance(payload_map, dict):

@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Type, Union
 from warnings import warn
 
 from vkbottle.modules import logger
@@ -12,6 +12,8 @@ from vkbottle_types.events import MessageEvent as _MessageEvent
 from vkbottle_types.events.objects.group_event_objects import MessageEventObject
 from vkbottle_types.responses.base import OkResponseModel
 from vkbottle_types.responses.messages import EditResponseModel, SendResponseModel
+
+from vkbottle_callback.rules import *
 
 
 class MessageEvent(MessageEventObject):
@@ -192,11 +194,22 @@ class MessageEventView(ABCView):
 
 
 LabeledMessageEventHandler = Callable[..., Callable[[MessageEvent], Any]]
+DEFAULT_CUSTOM_RULES: Dict[str, Type[ABCMessageEventRule]] = {
+    "from_chat": PeerRule,
+    "payload": PayloadRule,
+    "payload_contains": PayloadContainsRule,
+    "payload_map": PayloadMapRule,
+    "func": FuncRule,
+    "coro": CoroutineRule,
+    "coroutine": CoroutineRule,
+    "state": StateRule,
+}
 
 
 class MessageEventLabeler(BotLabeler):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.custom_rules = kwargs.get("custom_rules") or DEFAULT_CUSTOM_RULES
         self.message_event_view = MessageEventView()
 
     def message_event(

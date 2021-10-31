@@ -15,5 +15,6 @@ in the code, some base rules and ABCMessageEventRule.
 >>>     await event.show_snackbar("Hello world")
 """
 
-from .main import MessageEvent, MessageEventLabeler, MessageEventView
+from .main import MessageEventLabeler, MessageEventView
 from .rules import ABCMessageEventRule
+from .types import MessageEvent

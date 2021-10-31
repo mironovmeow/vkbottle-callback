@@ -1,9 +1,19 @@
 [tool.poetry]
 name = "vkbottle-callback"
-version = "0.1.1"
+version = "1.0.0"
 description = "Add supporting of MessageEvent (event from callback buttons)"
-authors = ["mironovmeow <71277890+mironovmeow@users.noreply.github.com>"]
+authors = ["mironovmeow"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/mironovmeow/vkbottle-callback"
+repository = "https://github.com/mironovmeow/vkbottle-callback"
+keywords = [
+  "vk",
+  "vk-api",
+  "vkbottle",
+  "callback",
+  "message-event",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"

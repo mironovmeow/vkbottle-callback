@@ -153,7 +153,7 @@ __all__ = (
     "FromPeerRule",
     "PayloadRule",
     "PayloadContainsRule",
-    # "PayloadMapRule",
+    "PayloadMapRule",
     "FuncRule",
     "CoroutineRule",
     "StateRule"

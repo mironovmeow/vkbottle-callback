@@ -12,7 +12,7 @@ from vkbottle.tools.validator import (
 )
 from vkbottle_types import BaseStateGroup
 
-from vkbottle_callback import MessageEvent
+from vkbottle_callback.types import MessageEvent
 
 PayloadMap = List[Tuple[str, Union[type, Callable[[Any], bool], ABCValidator, Any]]]
 PayloadMapStrict = List[Tuple[str, ABCValidator]]

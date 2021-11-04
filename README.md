@@ -9,7 +9,8 @@
 
 ## ЧАвО, документация и примеры
 
-Появятся чуть позже...
+[FAQ.md](https://github.com/mironovmeow/vkbottle-callback/blob/master/FAQ.md),
+[примеры](https://github.com/mironovmeow/vkbottle-callback/tree/master/examples). Документация выйдет чуть позже
 
 ## Планируется:
 

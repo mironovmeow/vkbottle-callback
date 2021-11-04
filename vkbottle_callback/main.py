@@ -8,8 +8,8 @@ from vkbottle.framework.bot.labeler.default import ShortenRule
 from vkbottle.modules import logger
 from vkbottle_types.events import MessageEvent as _MessageEvent
 
-from vkbottle_callback.types import MessageEvent
 from vkbottle_callback.rules import *
+from vkbottle_callback.types import MessageEvent
 
 
 class BotMessageEventReturnHandler(BaseReturnManager):
@@ -86,13 +86,14 @@ class MessageEventView(ABCView):
 LabeledMessageEventHandler = Callable[..., Callable[[MessageEvent], Any]]
 DEFAULT_CUSTOM_RULES: Dict[str, Type[ABCMessageEventRule]] = {
     "from_chat": PeerRule,
+    "peer_ids": FromPeerRule,
     "payload": PayloadRule,
     "payload_contains": PayloadContainsRule,
     "payload_map": PayloadMapRule,
     "func": FuncRule,
     "coro": CoroutineRule,
     "coroutine": CoroutineRule,
-    "state": StateRule,
+    "state": StateRule
 }
 
 

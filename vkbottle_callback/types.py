@@ -104,7 +104,6 @@ class MessageEvent(MessageEventObject):
 
     async def send_message(
             self,
-            random_id: Optional[int] = None,
             message: Optional[str] = None,
             lat: Optional[float] = None,
             long: Optional[float] = None,
@@ -118,6 +117,7 @@ class MessageEvent(MessageEventObject):
             disable_mentions: Optional[bool] = None,
             intent: Optional[str] = None,
             subscribe_id: Optional[int] = None,
+            random_id: Optional[int] = 0,
             **kwargs
     ) -> int:
         params = locals()

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vkbottle-callback"
-version = "1.0.0"
+version = "1.0.1"
 description = "Add supporting of MessageEvent (event from callback buttons)"
 authors = ["mironovmeow"]
 license = "MIT"

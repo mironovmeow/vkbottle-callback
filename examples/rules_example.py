@@ -27,15 +27,15 @@ bot = Bot(
 async def message_handler(message: Message):
     keyboard = (
         Keyboard(inline=True)
-            .add(Callback(message.text, {"type": "text", "text": message.text}))
-            .add(Callback("Payload", {
+        .add(Callback(message.text, {"type": "text", "text": message.text}))
+        .add(Callback("Payload", {
             "int": 42,
             "str": "42",
             "float": 4.2,
             "dict": {"42": 42},
             "list": ["42", 42],
         }))
-            .get_json()
+        .get_json()
     )
     await message.answer(message.text, keyboard=keyboard)
 

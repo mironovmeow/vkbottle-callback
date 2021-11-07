@@ -1,10 +1,14 @@
-from typing import Any, Callable, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Optional, Union
 from warnings import warn
 
-from vkbottle import ABCAPI, API
 from vkbottle.modules import json
 from vkbottle_types.events.objects.group_event_objects import MessageEventObject
-from vkbottle_types.objects import BaseBoolInt
+
+
+if TYPE_CHECKING:
+    from vkbottle import ABCAPI, API
+
+    from vkbottle_types.objects import BaseBoolInt
 
 
 class MessageEvent(MessageEventObject):

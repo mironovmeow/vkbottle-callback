@@ -100,7 +100,6 @@ class MessageEvent(MessageEventObject):
         params.update(kwargs)
         params["peer_id"] = self.peer_id
         params["conversation_message_id"] = self.conversation_message_id
-        print(params)
         return await self.ctx_api.messages.edit(
             **params
         )

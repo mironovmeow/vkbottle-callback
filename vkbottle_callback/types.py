@@ -4,10 +4,10 @@ from warnings import warn
 from vkbottle.modules import json
 from vkbottle_types.events.objects.group_event_objects import MessageEventObject
 from vkbottle_types.objects import BaseBoolInt
-
+from vkbottle import StatePeer
 
 if TYPE_CHECKING:
-    from vkbottle import ABCAPI, API, StatePeer
+    from vkbottle import ABCAPI, API
 
 
 class MessageEvent(MessageEventObject):
@@ -30,12 +30,11 @@ class MessageEvent(MessageEventObject):
         return self
 
     def get_payload_json(
-        self,
-        throw_error: bool = False,
-        unpack_failure: Callable[[str], dict] = lambda payload: payload,
-        json: Any = __import__("json"),
+            self,
+            throw_error: bool = False,
+            unpack_failure: Callable[[str], dict] = lambda payload: payload,
+            json: Any = __import__("json"),
     ) -> Union[dict, None]:
-
         # workaround: https://vk.com/bug242486
         if self.payload is not str:
             return self.payload
@@ -133,6 +132,8 @@ class MessageEvent(MessageEventObject):
             **params
         )
 
+
+MessageEvent.update_forward_refs()
 
 __all__ = (
     "MessageEvent"

@@ -4,6 +4,7 @@ from abc import abstractmethod
 from typing import Any, Awaitable, Callable, Coroutine, Dict, List, Tuple, Union
 
 from vkbottle import ABCRule
+from vkbottle.dispatch.dispenser import get_state_repr
 from vkbottle.tools.validator import (
     ABCValidator,
     CallableValidator,
@@ -59,10 +60,7 @@ class PayloadContainsRule(ABCMessageEventRule):
 
     async def check(self, event: MessageEvent) -> bool:
         payload = event.get_payload_json(unpack_failure=lambda p: {})
-        for k, v in self.payload_particular_part.items():
-            if payload.get(k) != v:
-                return False
-        return True
+        return all(payload.get(k) == v for k, v in self.payload_particular_part.items())
 
 
 class PayloadMapRule(ABCMessageEventRule):
@@ -73,7 +71,7 @@ class PayloadMapRule(ABCMessageEventRule):
 
     @classmethod
     def transform_to_map(cls, payload_map_dict: PayloadMapDict) -> PayloadMap:
-        """ Transforms PayloadMapDict to PayloadMap """
+        """Transforms PayloadMapDict to PayloadMap"""
         payload_map = []
         for (k, v) in payload_map_dict.items():
             if isinstance(v, dict):
@@ -83,7 +81,7 @@ class PayloadMapRule(ABCMessageEventRule):
 
     @classmethod
     def transform_to_callbacks(cls, payload_map: PayloadMap) -> PayloadMapStrict:
-        """ Transforms PayloadMap to PayloadMapStrict """
+        """Transforms PayloadMap to PayloadMapStrict"""
         for i, (key, value) in enumerate(payload_map):
             if isinstance(value, type):
                 value = IsInstanceValidator(value)
@@ -98,7 +96,7 @@ class PayloadMapRule(ABCMessageEventRule):
 
     @classmethod
     async def match(cls, payload: dict, payload_map: PayloadMapStrict):
-        """ Matches payload with payload_map recursively """
+        """Matches payload with payload_map recursively"""
         for (k, validator) in payload_map:
             if k not in payload:
                 return False
@@ -117,7 +115,7 @@ class PayloadMapRule(ABCMessageEventRule):
 
 
 class FuncRule(ABCMessageEventRule):
-    def __init__(self, func: Union[Callable[[MessageEvent], Union[bool, Awaitable]]]):
+    def __init__(self, func: Callable[[MessageEvent], Union[bool, Awaitable]]):
         self.func = func
 
     async def check(self, event: MessageEvent) -> Union[dict, bool]:
@@ -128,17 +126,17 @@ class FuncRule(ABCMessageEventRule):
 
 class CoroutineRule(ABCMessageEventRule):
     def __init__(self, coroutine: Coroutine):
-        self.coroutine = coroutine
+        self.coro = coroutine
 
     async def check(self, message: MessageEvent) -> Union[dict, bool]:
-        return await self.coroutine
+        return await self.coro
 
 
 class StateRule(ABCMessageEventRule):
-    def __init__(self, state: Union[List[BaseStateGroup], BaseStateGroup]):
+    def __init__(self, state: Union[List["BaseStateGroup"], "BaseStateGroup"]):
         if not isinstance(state, list):
             state = [] if state is None else [state]
-        self.state = state
+        self.state = [get_state_repr(s) for s in state]
 
     async def check(self, event: MessageEvent) -> bool:
         if event.state_peer is None:

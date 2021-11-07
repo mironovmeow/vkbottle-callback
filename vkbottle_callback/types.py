@@ -7,10 +7,11 @@ from vkbottle_types.objects import BaseBoolInt
 
 
 if TYPE_CHECKING:
-    from vkbottle import ABCAPI, API
+    from vkbottle import ABCAPI, API, StatePeer
 
 
 class MessageEvent(MessageEventObject):
+    state_peer: Optional["StatePeer"]  # StatePeer move to vkbottle module
     group_id: Optional[int] = None
     unprepared_ctx_api: Optional[Any] = None
 

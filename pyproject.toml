@@ -17,7 +17,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-vkbottle = "^3.1"
+vkbottle = { git = "https://github.com/mironovmeow/vkbottle-callback", branch = "dev" }
 
 [tool.poetry.dev-dependencies]
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vkbottle-callback"
-version = "1.1.1"
+version = "1.1.2"
 description = "Add supporting of MessageEvent (event from callback buttons)"
 authors = ["mironovmeow"]
 license = "MIT"
@@ -17,7 +17,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-vkbottle = { git = "https://github.com/vkbottle/vkbottle.git", branch = "dev" }
+vkbottle = "4.*"
 
 [tool.poetry.dev-dependencies]
 
